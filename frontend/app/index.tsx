@@ -33,7 +33,17 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <Ionicons name="grid" size={64} color={colors.gold} />
           <Text style={styles.title}>QUORIDOR</Text>
-          <Text style={styles.subtitle}>Strategic Board Game</Text>
+          <Text style={styles.subtitle}>by E-K Games</Text>
+        </View>
+
+        <View style={styles.rules}>
+          <Text style={styles.rulesTitle}>How to Play</Text>
+          <Text style={styles.rulesText}>
+            • Reach the opposite side of the board to win{'\n'}
+            • Each turn: Move your pawn or place a wall{'\n'}
+            • Walls block movement but can't trap players{'\n'}
+            • Each player has 10 walls
+          </Text>
         </View>
 
         <View style={styles.modeSection}>
@@ -80,16 +90,6 @@ export default function HomeScreen() {
             </View>
             <Ionicons name="chevron-forward" size={24} color={colors.gold} />
           </TouchableOpacity>
-        </View>
-
-        <View style={styles.rules}>
-          <Text style={styles.rulesTitle}>How to Play</Text>
-          <Text style={styles.rulesText}>
-            • Reach the opposite side of the board to win{' \n'}
-            • Each turn: Move your pawn or place a wall{' \n'}
-            • Walls block movement but can't trap players{' \n'}
-            • Each player has 10 walls
-          </Text>
         </View>
       </View>
     </SafeAreaView>
