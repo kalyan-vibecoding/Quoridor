@@ -1,11 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
-import Animated, { 
-  useAnimatedStyle, 
-  withSpring,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { View, StyleSheet } from 'react-native';
 import { colors, sizes } from '../constants/theme';
 
 type PawnProps = {
@@ -17,41 +11,22 @@ type PawnProps = {
 export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer }) => {
   const [row, col] = position;
   
-  const animatedStyle = useAnimatedStyle(() => {
-    const cellSize = sizes.cellSize;
-    const wallGap = sizes.wallGap;
-    const totalCellSize = cellSize + wallGap;
-    
-    return {
-      transform: [
-        { 
-          translateX: withSpring(col * totalCellSize + cellSize / 2, {
-            damping: 15,
-            stiffness: 150,
-          })
-        },
-        { 
-          translateY: withSpring(row * totalCellSize + cellSize / 2, {
-            damping: 15,
-            stiffness: 150,
-          })
-        },
-        { 
-          scale: withTiming(isCurrentPlayer ? 1.1 : 1, {
-            duration: 200,
-          })
-        },
-      ],
-    };
-  });
+  const cellSize = sizes.cellSize;
+  const wallGap = sizes.wallGap;
+  const totalCellSize = cellSize + wallGap;
+
+  const pawnStyle = {
+    left: col * totalCellSize + cellSize / 2 - sizes.pawnSize / 2,
+    top: row * totalCellSize + cellSize / 2 - sizes.pawnSize / 2,
+  };
 
   return (
-    <Animated.View 
+    <View 
       style={[
         styles.pawn, 
         { backgroundColor: color },
         isCurrentPlayer && styles.activePawn,
-        animatedStyle,
+        pawnStyle,
       ]} 
     />
   );
@@ -63,8 +38,6 @@ const styles = StyleSheet.create({
     width: sizes.pawnSize,
     height: sizes.pawnSize,
     borderRadius: sizes.pawnSize / 2,
-    marginLeft: -sizes.pawnSize / 2,
-    marginTop: -sizes.pawnSize / 2,
     borderWidth: 3,
     borderColor: colors.cream,
     shadowColor: '#000',
@@ -78,5 +51,6 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     shadowOpacity: 0.5,
     elevation: 12,
+    transform: [{ scale: 1.1 }],
   },
 });
