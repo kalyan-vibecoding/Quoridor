@@ -182,7 +182,7 @@ export default function GameScreen() {
       }
     }
     
-    router.push('/');
+    router.replace('/');
   };
 
   const currentPlayerColor = currentPlayer === 0 ? colors.player1 : colors.player2;
