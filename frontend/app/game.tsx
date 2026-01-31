@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
-  SafeAreaView,
   StatusBar,
   ScrollView,
   TouchableOpacity,
   Text,
   Alert,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { colors, spacing } from '../constants/theme';
@@ -188,7 +188,7 @@ export default function GameScreen() {
   const currentPlayerColor = currentPlayer === 0 ? colors.player1 : colors.player2;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top']}>
       <StatusBar barStyle="light-content" />
       
       <ScrollView 
