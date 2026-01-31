@@ -32,8 +32,8 @@ export default function HistoryScreen() {
 
   const fetchGameHistory = async () => {
     try {
-      const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL;
-      const response = await fetch(`${backendUrl}/api/games`);
+      // Use relative URL which will work in both web and mobile
+      const response = await fetch('/api/games');
       const data = await response.json();
       setGames(data);
     } catch (error) {
