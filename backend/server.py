@@ -35,6 +35,16 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+class GameResult(BaseModel):
+    game_number: int
+    winner_name: str
+    game_mode: str  # "local" or "ai"
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class GameResultCreate(BaseModel):
+    winner_name: str
+    game_mode: str
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
@@ -51,6 +61,27 @@ async def create_status_check(input: StatusCheckCreate):
 async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
+
+# Game History Routes
+@api_router.post("/games")
+async def create_game_result(game_input: GameResultCreate):
+    # Get the next game number
+    last_game = await db.game_results.find_one(sort=[("game_number", -1)])
+    next_game_number = (last_game["game_number"] + 1) if last_game else 1
+    
+    game_result = GameResult(
+        game_number=next_game_number,
+        winner_name=game_input.winner_name,
+        game_mode=game_input.game_mode
+    )
+    
+    await db.game_results.insert_one(game_result.dict())
+    return game_result
+
+@api_router.get("/games")
+async def get_game_results():
+    games = await db.game_results.find().sort("game_number", -1).to_list(100)
+    return [GameResult(**game) for game in games]
 
 # Include the router in the main app
 app.include_router(api_router)
