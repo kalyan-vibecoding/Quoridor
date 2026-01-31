@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Animated, { FadeIn } from 'react-native-reanimated';
 import { colors, sizes } from '../constants/theme';
 
 type WallProps = {
@@ -34,10 +33,7 @@ export const Wall: React.FC<WallProps> = ({ type, row, col, isPreview }) => {
   };
 
   return (
-    <Animated.View 
-      entering={isPreview ? undefined : FadeIn.duration(300)}
-      style={[styles.wall, wallStyle]} 
-    />
+    <View style={[styles.wall, wallStyle]} />
   );
 };
 
