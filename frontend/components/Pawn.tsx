@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emoji: {
-    fontSize: 18,
+    fontSize: 20,
     textAlign: 'center',
+    lineHeight: 24,
   },
 });
