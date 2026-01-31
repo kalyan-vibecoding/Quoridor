@@ -168,8 +168,8 @@ export default function GameScreen() {
     // Save game result
     if (winner) {
       try {
-        const backendUrl = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL;
-        await fetch(`${backendUrl}/api/games`, {
+        // Use relative URL which will work in both web and mobile
+        await fetch('/api/games', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -179,6 +179,7 @@ export default function GameScreen() {
         });
       } catch (error) {
         console.error('Failed to save game result:', error);
+        // Continue to home even if save fails
       }
     }
     
