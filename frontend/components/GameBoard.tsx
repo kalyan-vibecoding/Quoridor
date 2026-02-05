@@ -10,6 +10,8 @@ type WallType = { type: 'h' | 'v'; row: number; col: number };
 type GameBoardProps = {
   player1Pos: Position;
   player2Pos: Position;
+  player1Emoji: string;
+  player2Emoji: string;
   walls: WallType[];
   wallPreview: WallType | null;
   selectedCell: Position | null;
