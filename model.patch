@@ -1,34 +1,77 @@
-diff --git a/test_result.md b/test_result.md
-index 0a22eaa..0eda727 100644
---- a/test_result.md
-+++ b/test_result.md
-@@ -116,6 +116,9 @@ backend:
-       - working: true
-         agent: "main"
-         comment: "Created game result model with auto-incrementing game_number, winner_name, and game_mode. Tested with curl - successfully saves and retrieves games"
-+      - working: true
-+        agent: "testing"
-+        comment: "Comprehensive testing completed. API correctly handles valid local/AI games, auto-increments game_number, validates required fields (rejects empty/missing winner_name and game_mode), handles special characters and long names. Minor: accepts empty game_mode string (should ideally reject). Core functionality working perfectly - 14/15 tests passed."
+diff --git a/frontend/components/Pawn.tsx b/frontend/components/Pawn.tsx
+index f805d52..b521bb9 100644
+--- a/frontend/components/Pawn.tsx
++++ b/frontend/components/Pawn.tsx
+@@ -6,9 +6,10 @@ type PawnProps = {
+   position: [number, number];
+   color: string;
+   isCurrentPlayer: boolean;
++  emoji: string;
+ };
+ 
+-export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer }) => {
++export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer, emoji }) => {
+   const [row, col] = position;
    
-   - task: "Game history API - GET /api/games"
-     implemented: true
-@@ -128,6 +131,9 @@ backend:
-       - working: true
-         agent: "main"
-         comment: "Returns all game results sorted by game_number descending. Tested with curl - working correctly"
-+      - working: true
-+        agent: "testing"
-+        comment: "Thoroughly tested GET endpoint. Correctly returns games sorted by game_number descending (newest first), includes all required fields (game_number, winner_name, game_mode, created_at), handles empty state gracefully. Response structure and sorting verified with 15 games in database."
+   const cellSize = sizes.cellSize;
+@@ -20,12 +21,6 @@ export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer })
+     top: row * totalCellSize + cellSize / 2 - sizes.pawnSize / 2,
+   };
  
- frontend:
-   - task: "Home screen with mode selection"
-@@ -257,4 +263,6 @@ test_plan:
- 
- agent_communication:
-   - agent: "main"
--    message: "Core Quoridor game implementation complete. Backend APIs tested with curl and working. Frontend home screen verified with screenshot - elegant dark theme with gold accents looking great. Need comprehensive testing of: 1) Full game flow (mode selection → player setup → gameplay), 2) Pawn movement and wall placement mechanics, 3) Path validation algorithm, 4) AI opponent, 5) Win detection and history saving. Ready for backend testing agent."
-\ No newline at end of file
-+    message: "Core Quoridor game implementation complete. Backend APIs tested with curl and working. Frontend home screen verified with screenshot - elegant dark theme with gold accents looking great. Need comprehensive testing of: 1) Full game flow (mode selection → player setup → gameplay), 2) Pawn movement and wall placement mechanics, 3) Path validation algorithm, 4) AI opponent, 5) Win detection and history saving. Ready for backend testing agent."
-+  - agent: "testing"
-+    message: "Backend API testing completed successfully! Both POST /api/games and GET /api/games endpoints are working correctly. Comprehensive test suite (15 tests) passed with 93.3% success rate. APIs handle game creation, auto-incrementing game numbers, proper sorting, validation, and edge cases well. Only minor issue: empty game_mode string is accepted (not critical). Backend is production-ready for the Quoridor game."
-\ No newline at end of file
+-  // Use different dinosaur emojis for different colors
+-  const getDinoEmoji = () => {
+-    if (color === colors.player1) return '🦕'; // Blue player - Sauropod (long neck dino)
+-    return '🦖'; // Red player - T-Rex
+-  };
+-
+   return (
+     <View 
+       style={[
+@@ -39,7 +34,7 @@ export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer })
+         pawnStyle,
+       ]} 
+     >
+-      <Text style={styles.emoji}>{getDinoEmoji()}</Text>
++      <Text style={styles.emoji}>{emoji}</Text>
+     </View>
+   );
+ };
+diff --git a/model.patch b/model.patch
+index ec8f125..e69de29 100644
+--- a/model.patch
++++ b/model.patch
+@@ -1,34 +0,0 @@
+-diff --git a/test_result.md b/test_result.md
+-index 0a22eaa..0eda727 100644
+---- a/test_result.md
+-+++ b/test_result.md
+-@@ -116,6 +116,9 @@ backend:
+-       - working: true
+-         agent: "main"
+-         comment: "Created game result model with auto-incrementing game_number, winner_name, and game_mode. Tested with curl - successfully saves and retrieves games"
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Comprehensive testing completed. API correctly handles valid local/AI games, auto-increments game_number, validates required fields (rejects empty/missing winner_name and game_mode), handles special characters and long names. Minor: accepts empty game_mode string (should ideally reject). Core functionality working perfectly - 14/15 tests passed."
+-   
+-   - task: "Game history API - GET /api/games"
+-     implemented: true
+-@@ -128,6 +131,9 @@ backend:
+-       - working: true
+-         agent: "main"
+-         comment: "Returns all game results sorted by game_number descending. Tested with curl - working correctly"
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Thoroughly tested GET endpoint. Correctly returns games sorted by game_number descending (newest first), includes all required fields (game_number, winner_name, game_mode, created_at), handles empty state gracefully. Response structure and sorting verified with 15 games in database."
+- 
+- frontend:
+-   - task: "Home screen with mode selection"
+-@@ -257,4 +263,6 @@ test_plan:
+- 
+- agent_communication:
+-   - agent: "main"
+--    message: "Core Quoridor game implementation complete. Backend APIs tested with curl and working. Frontend home screen verified with screenshot - elegant dark theme with gold accents looking great. Need comprehensive testing of: 1) Full game flow (mode selection → player setup → gameplay), 2) Pawn movement and wall placement mechanics, 3) Path validation algorithm, 4) AI opponent, 5) Win detection and history saving. Ready for backend testing agent."
+-\ No newline at end of file
+-+    message: "Core Quoridor game implementation complete. Backend APIs tested with curl and working. Frontend home screen verified with screenshot - elegant dark theme with gold accents looking great. Need comprehensive testing of: 1) Full game flow (mode selection → player setup → gameplay), 2) Pawn movement and wall placement mechanics, 3) Path validation algorithm, 4) AI opponent, 5) Win detection and history saving. Ready for backend testing agent."
+-+  - agent: "testing"
+-+    message: "Backend API testing completed successfully! Both POST /api/games and GET /api/games endpoints are working correctly. Comprehensive test suite (15 tests) passed with 93.3% success rate. APIs handle game creation, auto-incrementing game numbers, proper sorting, validation, and edge cases well. Only minor issue: empty game_mode string is accepted (not critical). Backend is production-ready for the Quoridor game."
+-\ No newline at end of file
