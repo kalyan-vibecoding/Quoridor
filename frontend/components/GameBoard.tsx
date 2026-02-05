@@ -25,6 +25,8 @@ type GameBoardProps = {
 export const GameBoard: React.FC<GameBoardProps> = ({
   player1Pos,
   player2Pos,
+  player1Emoji,
+  player2Emoji,
   walls,
   wallPreview,
   selectedCell,
