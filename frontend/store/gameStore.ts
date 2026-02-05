@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { getRandomDinoPair } from '../utils/dinoEmojis';
 
 type Position = [number, number];
 
@@ -12,6 +13,7 @@ type Player = {
   name: string;
   position: Position;
   wallsLeft: number;
+  emoji: string;
 };
 
 type GameMode = 'local' | 'ai';
@@ -45,8 +47,8 @@ type GameState = {
 export const useGameStore = create<GameState>((set, get) => ({
   mode: null,
   players: [
-    { name: '', position: [8, 4], wallsLeft: 10 },
-    { name: '', position: [0, 4], wallsLeft: 10 },
+    { name: '', position: [8, 4], wallsLeft: 10, emoji: '🦕' },
+    { name: '', position: [0, 4], wallsLeft: 10, emoji: '🦖' },
   ],
   currentPlayer: 0,
   walls: [],
@@ -59,20 +61,23 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   setMode: (mode) => set({ mode }),
 
-  initGame: (player1Name, player2Name) => set({
-    players: [
-      { name: player1Name, position: [8, 4], wallsLeft: 10 },
-      { name: player2Name, position: [0, 4], wallsLeft: 10 },
-    ],
-    currentPlayer: 0,
-    walls: [],
-    gameOver: false,
-    winner: null,
-    selectedCell: null,
-    wallPreview: null,
-    placingWall: false,
-    wallOrientation: 'h',
-  }),
+  initGame: (player1Name, player2Name) => {
+    const [emoji1, emoji2] = getRandomDinoPair();
+    set({
+      players: [
+        { name: player1Name, position: [8, 4], wallsLeft: 10, emoji: emoji1 },
+        { name: player2Name, position: [0, 4], wallsLeft: 10, emoji: emoji2 },
+      ],
+      currentPlayer: 0,
+      walls: [],
+      gameOver: false,
+      winner: null,
+      selectedCell: null,
+      wallPreview: null,
+      placingWall: false,
+      wallOrientation: 'h',
+    });
+  },
 
   movePawn: (position) => {
     const state = get();
@@ -146,10 +151,11 @@ export const useGameStore = create<GameState>((set, get) => ({
   
   resetGame: () => {
     const state = get();
+    const [emoji1, emoji2] = getRandomDinoPair();
     set({
       players: [
-        { name: state.players[0].name, position: [8, 4], wallsLeft: 10 },
-        { name: state.players[1].name, position: [0, 4], wallsLeft: 10 },
+        { name: state.players[0].name, position: [8, 4], wallsLeft: 10, emoji: emoji1 },
+        { name: state.players[1].name, position: [0, 4], wallsLeft: 10, emoji: emoji2 },
       ],
       currentPlayer: 0,
       walls: [],
