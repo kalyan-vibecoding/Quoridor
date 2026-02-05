@@ -215,8 +215,10 @@ export default function GameScreen() {
           currentPlayerColor={currentPlayerColor}
           player1Name={players[0].name}
           player1WallsLeft={players[0].wallsLeft}
+          player1Emoji={players[0].emoji}
           player2Name={players[1].name}
           player2WallsLeft={players[1].wallsLeft}
+          player2Emoji={players[1].emoji}
           placingWall={placingWall}
           wallOrientation={wallOrientation}
           onToggleWallPlacement={toggleWallPlacement}
