@@ -8,8 +8,10 @@ type GameControlsProps = {
   currentPlayerColor: string;
   player1Name: string;
   player1WallsLeft: number;
+  player1Emoji: string;
   player2Name: string;
   player2WallsLeft: number;
+  player2Emoji: string;
   placingWall: boolean;
   wallOrientation: 'h' | 'v';
   onToggleWallPlacement: () => void;
@@ -23,8 +25,10 @@ export const GameControls: React.FC<GameControlsProps> = ({
   currentPlayerColor,
   player1Name,
   player1WallsLeft,
+  player1Emoji,
   player2Name,
   player2WallsLeft,
+  player2Emoji,
   placingWall,
   wallOrientation,
   onToggleWallPlacement,
@@ -32,6 +36,26 @@ export const GameControls: React.FC<GameControlsProps> = ({
   onReset,
   currentPlayerIndex,
 }) => {
+  // Render wall icons for visual count
+  const renderWalls = (count: number, playerColor: string) => {
+    return (
+      <View style={styles.wallsContainer}>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <View
+            key={index}
+            style={[
+              styles.wallIcon,
+              {
+                backgroundColor: index < count ? playerColor : colors.wallSlot,
+                opacity: index < count ? 1 : 0.3,
+              },
+            ]}
+          />
+        ))}
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container}>
       {/* Current Turn */}
@@ -40,24 +64,30 @@ export const GameControls: React.FC<GameControlsProps> = ({
         <Text style={styles.turnText}>{currentPlayerName}'s Turn</Text>
       </View>
 
-      {/* Player Stats */}
-      <View style={styles.stats}>
-        <View style={[styles.playerStat, currentPlayerIndex === 0 && styles.activePlayer]}>
-          <View style={[styles.playerDot, { backgroundColor: colors.player1 }]} />
-          <Text style={styles.playerName}>{player1Name}</Text>
-          <View style={styles.wallCount}>
-            <Ionicons name="remove" size={16} color={colors.gold} />
+      {/* Player Stats with Visual Walls */}
+      <View style={styles.statsContainer}>
+        {/* Player 1 - Bottom */}
+        <View style={[styles.playerSection, currentPlayerIndex === 0 && styles.activePlayerSection]}>
+          <View style={styles.playerHeader}>
+            <View style={styles.playerInfo}>
+              <Text style={styles.playerEmoji}>{player1Emoji}</Text>
+              <Text style={styles.playerName}>{player1Name}</Text>
+            </View>
             <Text style={styles.wallCountText}>{player1WallsLeft}</Text>
           </View>
+          {renderWalls(player1WallsLeft, colors.player1)}
         </View>
 
-        <View style={[styles.playerStat, currentPlayerIndex === 1 && styles.activePlayer]}>
-          <View style={[styles.playerDot, { backgroundColor: colors.player2 }]} />
-          <Text style={styles.playerName}>{player2Name}</Text>
-          <View style={styles.wallCount}>
-            <Ionicons name="remove" size={16} color={colors.gold} />
+        {/* Player 2 - Top */}
+        <View style={[styles.playerSection, currentPlayerIndex === 1 && styles.activePlayerSection]}>
+          <View style={styles.playerHeader}>
+            <View style={styles.playerInfo}>
+              <Text style={styles.playerEmoji}>{player2Emoji}</Text>
+              <Text style={styles.playerName}>{player2Name}</Text>
+            </View>
             <Text style={styles.wallCountText}>{player2WallsLeft}</Text>
           </View>
+          {renderWalls(player2WallsLeft, colors.player2)}
         </View>
       </View>
 
@@ -129,40 +159,54 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.cream,
   },
-  stats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  statsContainer: {
     gap: spacing.md,
   },
-  playerStat: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
+  playerSection: {
     backgroundColor: colors.background,
-    padding: spacing.sm,
+    padding: spacing.md,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: 'transparent',
   },
-  activePlayer: {
+  activePlayerSection: {
     borderColor: colors.gold,
   },
+  playerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  playerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  playerEmoji: {
+    fontSize: 24,
+  },
   playerName: {
-    flex: 1,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: colors.cream,
   },
-  wallCount: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
   wallCountText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: colors.gold,
+  },
+  wallsContainer: {
+    flexDirection: 'row',
+    gap: 4,
+    flexWrap: 'wrap',
+  },
+  wallIcon: {
+    width: 28,
+    height: 12,
+    borderRadius: 3,
+    borderWidth: 1,
+    borderColor: colors.wallSlot,
   },
   actions: {
     flexDirection: 'row',
