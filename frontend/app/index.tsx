@@ -105,14 +105,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  content: {
+  scrollView: {
     flex: 1,
+  },
+  scrollContent: {
     padding: spacing.lg,
-    justifyContent: 'space-between',
+    paddingBottom: spacing.xl * 2,
   },
   header: {
     alignItems: 'center',
-    paddingVertical: spacing.xl,
+    paddingVertical: spacing.lg,
+    marginBottom: spacing.md,
   },
   title: {
     fontSize: 48,
@@ -128,9 +131,24 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
     letterSpacing: 2,
   },
+  rules: {
+    backgroundColor: colors.boardBg,
+    padding: spacing.lg,
+    borderRadius: 16,
+    marginBottom: spacing.lg,
+  },
+  rulesTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: colors.gold,
+    marginBottom: spacing.sm,
+  },
+  rulesText: {
+    fontSize: 14,
+    color: colors.cream,
+    lineHeight: 22,
+  },
   modeSection: {
-    flex: 1,
-    justifyContent: 'center',
     gap: spacing.md,
   },
   sectionTitle: {
@@ -167,22 +185,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colors.cream,
     opacity: 0.7,
-  },
-  rules: {
-    backgroundColor: colors.boardBg,
-    padding: spacing.lg,
-    borderRadius: 16,
-    marginTop: spacing.lg,
-  },
-  rulesTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.gold,
-    marginBottom: spacing.sm,
-  },
-  rulesText: {
-    fontSize: 14,
-    color: colors.cream,
-    lineHeight: 22,
   },
 });
