@@ -29,7 +29,11 @@ export default function HomeScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       
-      <View style={styles.content}>
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <Ionicons name="grid" size={64} color={colors.gold} />
           <Text style={styles.title}>QUORIDOR</Text>
@@ -91,7 +95,7 @@ export default function HomeScreen() {
             <Ionicons name="chevron-forward" size={24} color={colors.gold} />
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
