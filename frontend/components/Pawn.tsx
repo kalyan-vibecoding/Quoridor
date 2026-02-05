@@ -6,9 +6,10 @@ type PawnProps = {
   position: [number, number];
   color: string;
   isCurrentPlayer: boolean;
+  emoji: string;
 };
 
-export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer }) => {
+export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer, emoji }) => {
   const [row, col] = position;
   
   const cellSize = sizes.cellSize;
@@ -18,12 +19,6 @@ export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer }) 
   const pawnStyle = {
     left: col * totalCellSize + cellSize / 2 - sizes.pawnSize / 2,
     top: row * totalCellSize + cellSize / 2 - sizes.pawnSize / 2,
-  };
-
-  // Use different dinosaur emojis for different colors
-  const getDinoEmoji = () => {
-    if (color === colors.player1) return '🦕'; // Blue player - Sauropod (long neck dino)
-    return '🦖'; // Red player - T-Rex
   };
 
   return (
@@ -39,7 +34,7 @@ export const Pawn: React.FC<PawnProps> = ({ position, color, isCurrentPlayer }) 
         pawnStyle,
       ]} 
     >
-      <Text style={styles.emoji}>{getDinoEmoji()}</Text>
+      <Text style={styles.emoji}>{emoji}</Text>
     </View>
   );
 };
