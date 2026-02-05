@@ -150,8 +150,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       )}
 
       {/* Pawns */}
-      <Pawn position={player1Pos} color={colors.player1} isCurrentPlayer={currentPlayer === 0} />
-      <Pawn position={player2Pos} color={colors.player2} isCurrentPlayer={currentPlayer === 1} />
+      <Pawn position={player1Pos} color={colors.player1} isCurrentPlayer={currentPlayer === 0} emoji={player1Emoji} />
+      <Pawn position={player2Pos} color={colors.player2} isCurrentPlayer={currentPlayer === 1} emoji={player2Emoji} />
     </View>
   );
 };
