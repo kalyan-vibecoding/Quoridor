@@ -229,6 +229,8 @@ export default function GameScreen() {
           <GameBoard
             player1Pos={players[0].position}
             player2Pos={players[1].position}
+            player1Emoji={players[0].emoji}
+            player2Emoji={players[1].emoji}
             walls={walls}
             wallPreview={wallPreview}
             selectedCell={selectedCell}
